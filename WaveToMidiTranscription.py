@@ -29,21 +29,23 @@ from magenta.music import midi_io
 from magenta.music.protobuf import music_pb2
 import six
 import tensorflow.compat.v1 as tf
+from config import cfg
+
+a=cfg['model_dir']
+b=cfg['hparams']
 
 FLAGS = tf.app.flags.FLAGS
 
 tf.app.flags.DEFINE_string('config', 'onsets_frames',
                            'Name of the config to use.')
-tf.app.flags.DEFINE_string('model_dir', None,
-                           'Path to look for acoustic checkpoints.')
+tf.app.flags.DEFINE_string('model_dir',a, 'Path to look for acoustic checkpoints.')
 tf.app.flags.DEFINE_string(
     'checkpoint_path', None,
     'Filename of the checkpoint to use. If not specified, will use the latest '
     'checkpoint')
 tf.app.flags.DEFINE_string(
     'hparams',
-    '',
-    'A comma-separated list of `name=value` hyperparameter values.')
+    b,'A comma-separated list of `name=value` hyperparameter values.')
 tf.app.flags.DEFINE_boolean(
     'load_audio_with_librosa', False,
     'Whether to use librosa for sampling audio (required for 24-bit audio)')
