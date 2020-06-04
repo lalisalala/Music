@@ -30,13 +30,16 @@ from magenta.music import constants
 from magenta.music.protobuf import generator_pb2
 from magenta.music.protobuf import music_pb2
 import tensorflow.compat.v1 as tf
+from config import cfg
 
+e=cfg['bundle_file2']
+g=cfg['output_dir']
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string(
     'run_dir', None,
     'Path to the directory where the latest checkpoint will be loaded from.')
 tf.app.flags.DEFINE_string(
-    'bundle_file', None,
+    'bundle_file', e,
     'Path to the bundle file. If specified, this will take priority over '
     'run_dir, unless save_generator_bundle is True, in which case both this '
     'flag and run_dir are required')
@@ -51,7 +54,7 @@ tf.app.flags.DEFINE_string(
 tf.app.flags.DEFINE_string(
     'config', 'rnn-nade', 'Config to use. Ignored if bundle is provided.')
 tf.app.flags.DEFINE_string(
-    'output_dir', '/tmp/pianoroll_rnn_nade/generated',
+    'output_dir', g,
     'The directory where MIDI files will be saved to.')
 tf.app.flags.DEFINE_integer(
     'num_outputs', 10,

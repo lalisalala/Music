@@ -40,13 +40,14 @@ CHORD_SYMBOL = music_pb2.NoteSequence.TextAnnotation.CHORD_SYMBOL
 CHORD_VELOCITY = 50
 
 c=cfg['bundle_file']
+g=cfg['output_dir']
 
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string(
     'run_dir', None,
     'Path to the directory where the latest checkpoint will be loaded from.')
 tf.app.flags.DEFINE_string(
-    'bundle_file', c,
+    'bundle_file1', c,
     'Path to the bundle file. If specified, this will take priority over '
     'run_dir, unless save_generator_bundle is True, in which case both this '
     'flag and run_dir are required')
@@ -59,7 +60,7 @@ tf.app.flags.DEFINE_string(
     'A short, human-readable text description of the bundle (e.g., training '
     'data, hyper parameters, etc.).')
 tf.app.flags.DEFINE_string(
-    'output_dir', '/tmp/improv_rnn/generated',
+    'output_dir', g,
     'The directory where MIDI files will be saved to.')
 tf.app.flags.DEFINE_integer(
     'num_outputs', 10,
@@ -88,7 +89,7 @@ tf.app.flags.DEFINE_string(
     'priming melody. If a primer melody is not specified, melodies will be '
     'generated from scratch.')
 tf.app.flags.DEFINE_boolean(
-    'render_chords', False,
+    'render_chords', True,
     'If true, the backing chords will also be rendered as notes in the output '
     'MIDI files.')
 tf.app.flags.DEFINE_float(

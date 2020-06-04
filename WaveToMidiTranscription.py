@@ -31,8 +31,10 @@ import six
 import tensorflow.compat.v1 as tf
 from config import cfg
 
-a=cfg['model_dir']
+
+a=cfg['model_dir'] #Configurations like checkpoint added
 b=cfg['hparams']
+g=cfg['output_dir']
 
 FLAGS = tf.app.flags.FLAGS
 
@@ -157,3 +159,5 @@ def console_entry_point():
 
 if __name__ == '__main__':
   console_entry_point()
+
+
