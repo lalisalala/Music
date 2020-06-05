@@ -18,7 +18,7 @@ from magenta.models.improv_rnn import improv_rnn_model
 import tensorflow.compat.v1 as tf
 from config import cfg
 
-d=cfg['config']
+d=cfg['config1']
 
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string(
