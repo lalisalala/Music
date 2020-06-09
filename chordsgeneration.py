@@ -39,7 +39,7 @@ CHORD_SYMBOL = music_pb2.NoteSequence.TextAnnotation.CHORD_SYMBOL
 # Velocity at which to play chord notes when rendering chords.
 CHORD_VELOCITY = 50
 
-c=cfg['bundle_file']
+c=cfg['bundle_file1']
 g=cfg['output_dir']
 
 FLAGS = tf.app.flags.FLAGS
@@ -47,7 +47,7 @@ tf.app.flags.DEFINE_string(
     'run_dir', None,
     'Path to the directory where the latest checkpoint will be loaded from.')
 tf.app.flags.DEFINE_string(
-    'bundle_file1', c,
+    'bundle_file', c,
     'Path to the bundle file. If specified, this will take priority over '
     'run_dir, unless save_generator_bundle is True, in which case both this '
     'flag and run_dir are required')
