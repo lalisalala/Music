@@ -2,7 +2,7 @@ import sys
 import subprocess
 from WaveToMidiTranscription import run
 from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog, QPushButton,QHBoxLayout, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog, QPushButton,QMessageBox
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtCore
 from magenta.models.onsets_frames_transcription import configs
@@ -39,9 +39,9 @@ class App(QWidget):
 
     def execute(self):
         if self.filePath is None:
-            print("Please select a File to transcribe.")
+            QMessageBox.about(self,'No File',"No File was selected, please select a file to transcribe")
         else:
-            run(["", self.filePath], config_map=configs.CONFIG_MAP, data_fn=data.provide_batch)
+            run(['', self.filePath], config_map=configs.CONFIG_MAP, data_fn=data.provide_batch)
             self.midiPath = self.filePath + '.midi'
 
     def selectFile(self):
