@@ -34,7 +34,10 @@ from config import cfg
 
 e=cfg['bundle_file2']
 g=cfg['output_dir']
+
+
 FLAGS = tf.app.flags.FLAGS
+
 tf.app.flags.DEFINE_string(
     'run_dir', None,
     'Path to the directory where the latest checkpoint will be loaded from.')
@@ -51,8 +54,6 @@ tf.app.flags.DEFINE_string(
     'bundle_description', None,
     'A short, human-readable text description of the bundle (e.g., training '
     'data, hyper parameters, etc.).')
-tf.app.flags.DEFINE_string(
-    'config', 'rnn-nade', 'Config to use. Ignored if bundle is provided.')
 tf.app.flags.DEFINE_string(
     'output_dir', g,
     'The directory where MIDI files will be saved to.')

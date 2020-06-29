@@ -35,6 +35,7 @@ from config import cfg
 d=cfg['bundle_file3']
 e=cfg['output_dir']
 
+
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string(
     'run_dir', None,

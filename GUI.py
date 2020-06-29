@@ -8,6 +8,10 @@ from PyQt5 import QtCore
 from magenta.models.onsets_frames_transcription import configs
 from magenta.models.onsets_frames_transcription import data
 from pathlib import Path
+from Improvisefurther import run_with_flags
+
+
+
 
 class App(QWidget):
 
@@ -31,11 +35,15 @@ class App(QWidget):
         self.button1.move(100,70)
         self.button1.clicked.connect(self.execute)
         self.button2= QPushButton('Select File to transcribe', self)
-        self.button2.setToolTip('Selet the file that you want to transcribe.')
+        self.button2.setToolTip('Select the file that you want to transcribe.')
         self.button2.move(300,70)
         self.button2.clicked.connect(self.selectFile)
-
+        self.button3= QPushButton('Improvise Further', self)
+        self.button3.setToolTip('The AI will generate a new sequence')
+        self.button3.move(100, 100)
+        self.button3.clicked.connect(self.improvise)
         self.show()
+
 
     def execute(self):
         if self.filePath is None:
@@ -45,7 +53,13 @@ class App(QWidget):
             self.midiPath = self.filePath + '.midi'
 
     def selectFile(self):
-        self.filePath = QFileDialog.getOpenFileName(self, "Choose .wav file to transcribe", "", "Wave Files (*.wav)")
+        self.filePath = QFileDialog.getOpenFileName(self, "Open a Wave file", "", "Wave File (*.wav)")[0]
+
+    def improvise(self):
+        if self.midiPath is not None:
+            run_with_flags(generator)
+        else:
+            QMessageBox.about(self, "No file", "No File was selected, please select a Midi file to improvise to")
 
 
 

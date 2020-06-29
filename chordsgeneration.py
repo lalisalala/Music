@@ -42,6 +42,7 @@ CHORD_VELOCITY = 50
 c=cfg['bundle_file1']
 g=cfg['output_dir']
 
+
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string(
     'run_dir', None,

@@ -36,6 +36,7 @@ a=cfg['model_dir'] #Configurations like checkpoint added
 b=cfg['hparams']
 g=cfg['output_dir']
 
+
 FLAGS = tf.app.flags.FLAGS
 
 tf.app.flags.DEFINE_string('config', 'onsets_frames',

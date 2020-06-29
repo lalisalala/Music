@@ -31,6 +31,7 @@ from config import cfg
 
 h=cfg['bundle_file4']
 
+
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string(
     'run_dir', None,
@@ -253,6 +254,7 @@ def main(unused_argv):
 
 def console_entry_point():
   tf.app.run(main)
+
 
 
 if __name__ == '__main__':
