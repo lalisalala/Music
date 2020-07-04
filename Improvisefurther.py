@@ -31,75 +31,76 @@ from magenta.music.protobuf import generator_pb2
 from magenta.music.protobuf import music_pb2
 import tensorflow.compat.v1 as tf
 from config import cfg
-
-e=cfg['bundle_file2']
-g=cfg['output_dir']
+from Flags import FLAGS
 
 
-FLAGS = tf.app.flags.FLAGS
 
-tf.app.flags.DEFINE_string(
-    'run_dir', None,
-    'Path to the directory where the latest checkpoint will be loaded from.')
-tf.app.flags.DEFINE_string(
-    'bundle_file', e,
-    'Path to the bundle file. If specified, this will take priority over '
-    'run_dir, unless save_generator_bundle is True, in which case both this '
-    'flag and run_dir are required')
-tf.app.flags.DEFINE_boolean(
-    'save_generator_bundle', False,
-    'If true, instead of generating a sequence, will save this generator as a '
-    'bundle file in the location specified by the bundle_file flag')
-tf.app.flags.DEFINE_string(
-    'bundle_description', None,
-    'A short, human-readable text description of the bundle (e.g., training '
-    'data, hyper parameters, etc.).')
-tf.app.flags.DEFINE_string(
-    'output_dir', g,
-    'The directory where MIDI files will be saved to.')
-tf.app.flags.DEFINE_integer(
-    'num_outputs', 10,
-    'The number of tracks to generate. One MIDI file will be created for '
-    'each.')
-tf.app.flags.DEFINE_integer(
-    'num_steps', 128,
-    'The total number of steps the generated track should be, priming '
-    'track length + generated steps. Each step is a 16th of a bar.')
-tf.app.flags.DEFINE_string(
-    'primer_pitches', '',
-    'A string representation of a Python list of pitches that will be used as '
-    'a starting chord with a quarter note duration. For example: '
-    '"[60, 64, 67]"')
-tf.app.flags.DEFINE_string(
-    'primer_pianoroll', '',
-    'A string representation of a Python list of '
-    '`magenta.music.PianorollSequence` event values (tuples of active MIDI'
-    'pitches for a sequence of steps). For example: '
-    '"[(55,), (54,), (55, 53), (50,), (62, 52), (), (63, 55)]".')
-tf.app.flags.DEFINE_string(
-    'primer_midi', '',
-    'The path to a MIDI file containing a polyphonic track that will be used '
-    'as a priming track.')
-tf.app.flags.DEFINE_float(
-    'qpm', None,
-    'The quarters per minute to play generated output at. If a primer MIDI is '
-    'given, the qpm from that will override this flag. If qpm is None, qpm '
-    'will default to 60.')
-tf.app.flags.DEFINE_integer(
-    'beam_size', 1,
-    'The beam size to use for beam search when generating tracks.')
-tf.app.flags.DEFINE_integer(
-    'branch_factor', 1,
-    'The branch factor to use for beam search when generating tracks.')
-tf.app.flags.DEFINE_string(
-    'log', 'INFO',
-    'The threshold for what messages will be logged DEBUG, INFO, WARN, ERROR, '
-    'or FATAL.')
-tf.app.flags.DEFINE_string(
-    'hparams', '',
-    'Comma-separated list of `name=value` pairs. For each pair, the value of '
-    'the hyperparameter named `name` is set to `value`. This mapping is merged '
-    'with the default hyperparameters.')
+
+if __name__=='__main__':
+    FLAGS = tf.app.flags.FLAGS
+
+    tf.app.flags.DEFINE_string(
+        'run_dir', None,
+        'Path to the directory where the latest checkpoint will be loaded from.')
+    tf.app.flags.DEFINE_string(
+        'bundle_file', cfg['bundle_file2'],
+        'Path to the bundle file. If specified, this will take priority over '
+        'run_dir, unless save_generator_bundle is True, in which case both this '
+        'flag and run_dir are required')
+    tf.app.flags.DEFINE_boolean(
+        'save_generator_bundle', False,
+        'If true, instead of generating a sequence, will save this generator as a '
+        'bundle file in the location specified by the bundle_file flag')
+    tf.app.flags.DEFINE_string(
+        'bundle_description', None,
+        'A short, human-readable text description of the bundle (e.g., training '
+        'data, hyper parameters, etc.).')
+    tf.app.flags.DEFINE_string(
+        'output_dir', cfg['output_dir'],
+        'The directory where MIDI files will be saved to.')
+    tf.app.flags.DEFINE_integer(
+        'num_outputs', 1,
+        'The number of tracks to generate. One MIDI file will be created for '
+        'each.')
+    tf.app.flags.DEFINE_integer(
+        'num_steps', 128,
+        'The total number of steps the generated track should be, priming '
+        'track length + generated steps. Each step is a 16th of a bar.')
+    tf.app.flags.DEFINE_string(
+        'primer_pitches', '',
+        'A string representation of a Python list of pitches that will be used as '
+        'a starting chord with a quarter note duration. For example: '
+        '"[60, 64, 67]"')
+    tf.app.flags.DEFINE_string(
+        'primer_pianoroll', '',
+        'A string representation of a Python list of '
+        '`magenta.music.PianorollSequence` event values (tuples of active MIDI'
+        'pitches for a sequence of steps). For example: '
+        '"[(55,), (54,), (55, 53), (50,), (62, 52), (), (63, 55)]".')
+    tf.app.flags.DEFINE_string(
+        'primer_midi', '',
+        'The path to a MIDI file containing a polyphonic track that will be used '
+        'as a priming track.')
+    tf.app.flags.DEFINE_float(
+        'qpm', None,
+        'The quarters per minute to play generated output at. If a primer MIDI is '
+        'given, the qpm from that will override this flag. If qpm is None, qpm '
+        'will default to 60.')
+    tf.app.flags.DEFINE_integer(
+        'beam_size', 1,
+        'The beam size to use for beam search when generating tracks.')
+    tf.app.flags.DEFINE_integer(
+        'branch_factor', 1,
+        'The branch factor to use for beam search when generating tracks.')
+    tf.app.flags.DEFINE_string(
+        'log', 'INFO',
+        'The threshold for what messages will be logged DEBUG, INFO, WARN, ERROR, '
+        'or FATAL.')
+    tf.app.flags.DEFINE_string(
+        'hparams', '',
+        'Comma-separated list of `name=value` pairs. For each pair, the value of '
+        'the hyperparameter named `name` is set to `value`. This mapping is merged '
+        'with the default hyperparameters.')
 
 
 def get_checkpoint():
@@ -129,7 +130,7 @@ def get_bundle():
   return sequence_generator_bundle.read_bundle_file(bundle_file)
 
 
-def run_with_flags(generator):
+def run_with_flags(generator, midi_path=None):
   """Generates pianoroll tracks and saves them as MIDI files.
 
   Uses the options specified by the flags defined in this module.
@@ -143,6 +144,8 @@ def run_with_flags(generator):
   output_dir = os.path.expanduser(FLAGS.output_dir)
 
   primer_midi = None
+  if midi_path is not None:
+      primer_midi = midi_path
   if FLAGS.primer_midi:
     primer_midi = os.path.expanduser(FLAGS.primer_midi)
 
@@ -247,7 +250,7 @@ def main(unused_argv):
     tf.logging.info('Saving generator bundle to %s', bundle_filename)
     generator.create_bundle_file(bundle_filename, FLAGS.bundle_description)
   else:
-    run_with_flags(generator)
+    run_with_flags(generator, unused_argv)
 
 
 def console_entry_point():

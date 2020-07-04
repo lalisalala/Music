@@ -20,12 +20,11 @@ import tensorflow.compat.v1 as tf
 from tensorflow.contrib import training as contrib_training
 from config import cfg
 
-i=cfg['config2']
 
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string(
     'config',
-    i,
+    cfg['config2'],
     "Which config to use. Must be one of 'basic', 'lookback', or 'attention'. "
     "Mutually exclusive with `--melody_encoder_decoder`.")
 tf.app.flags.DEFINE_string(

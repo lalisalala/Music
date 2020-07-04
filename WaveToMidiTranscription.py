@@ -30,35 +30,28 @@ from magenta.music.protobuf import music_pb2
 import six
 import tensorflow.compat.v1 as tf
 from config import cfg
+from Flags import FLAGS
 
+if __name__=='__main__':
+    FLAGS = tf.app.flags.FLAGS
 
-a=cfg['model_dir'] #Configurations like checkpoint added
-b=cfg['hparams']
-g=cfg['output_dir']
-
-
-FLAGS = tf.app.flags.FLAGS
-
-tf.app.flags.DEFINE_string('config', 'onsets_frames',
-                           'Name of the config to use.')
-tf.app.flags.DEFINE_string('model_dir',a, 'Path to look for acoustic checkpoints.')
-tf.app.flags.DEFINE_string(
-    'checkpoint_path', None,
-    'Filename of the checkpoint to use. If not specified, will use the latest '
-    'checkpoint')
-tf.app.flags.DEFINE_string(
-    'hparams',
-    b,'A comma-separated list of `name=value` hyperparameter values.')
-tf.app.flags.DEFINE_boolean(
-    'load_audio_with_librosa', False,
-    'Whether to use librosa for sampling audio (required for 24-bit audio)')
-tf.app.flags.DEFINE_string(
-    'transcribed_file_suffix', '',
-    'Optional suffix to add to transcribed files.')
-tf.app.flags.DEFINE_string(
-    'log', 'INFO',
-    'The threshold for what messages will be logged: '
-    'DEBUG, INFO, WARN, ERROR, or FATAL.')
+    tf.app.flags.DEFINE_string('config', 'onsets_frames',
+                               'Name of the config to use.')
+    tf.app.flags.DEFINE_string('model_dir',cfg['model_dir'], 'Path to look for acoustic checkpoints.')
+    tf.app.flags.DEFINE_string(
+        'checkpoint_path', None,
+        'Filename of the checkpoint to use. If not specified, will use the latest '
+        'checkpoint')
+    tf.app.flags.DEFINE_string(
+        'hparams',
+        cfg['hparams'],'A comma-separated list of `name=value` hyperparameter values.')
+    tf.app.flags.DEFINE_boolean(
+        'load_audio_with_librosa', False,
+        'Whether to use librosa for sampling audio (required for 24-bit audio)')
+    tf.app.flags.DEFINE_string(
+        'log', 'INFO',
+        'The threshold for what messages will be logged: '
+        'DEBUG, INFO, WARN, ERROR, or FATAL.')
 
 
 def create_example(filename, sample_rate, load_audio_with_librosa):
@@ -145,7 +138,7 @@ def run(argv, config_map, data_fn):
         sequence_prediction = music_pb2.NoteSequence.FromString(
             prediction_list[0]['sequence_predictions'][0])
 
-        midi_filename = filename + FLAGS.transcribed_file_suffix + '.midi'
+        midi_filename = filename + '.midi'
         midi_io.sequence_proto_to_midi_file(sequence_prediction, midi_filename)
 
         tf.logging.info('Transcription written to %s.', midi_filename)

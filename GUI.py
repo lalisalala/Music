@@ -1,5 +1,6 @@
 import sys
 import subprocess
+from Flags import FLAGS
 from WaveToMidiTranscription import run
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog, QPushButton,QMessageBox
@@ -8,8 +9,8 @@ from PyQt5 import QtCore
 from magenta.models.onsets_frames_transcription import configs
 from magenta.models.onsets_frames_transcription import data
 from pathlib import Path
-from Improvisefurther import run_with_flags
-
+from Improvisefurther import main
+import subprocess
 
 
 
@@ -42,6 +43,10 @@ class App(QWidget):
         self.button3.setToolTip('The AI will generate a new sequence')
         self.button3.move(100, 100)
         self.button3.clicked.connect(self.improvise)
+        self.button4=QPushButton('Show Sheet Music', self)
+        self.button4.setToolTip('Opens MuseScore to display Sheet Music')
+        self.button4.move(200,100)
+        self.button4.clicked.connect(self.sheetmusic)
         self.show()
 
 
@@ -57,9 +62,12 @@ class App(QWidget):
 
     def improvise(self):
         if self.midiPath is not None:
-            run_with_flags(generator)
+            main(self.midiPath)
         else:
             QMessageBox.about(self, "No file", "No File was selected, please select a Midi file to improvise to")
+
+    def sheetmusic(self):
+        subprocess.run(['C:/Program Files/MuseScore 3/bin/MuseScore3.exe'])
 
 
 

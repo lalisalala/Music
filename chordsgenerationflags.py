@@ -18,12 +18,11 @@ from magenta.models.improv_rnn import improv_rnn_model
 import tensorflow.compat.v1 as tf
 from config import cfg
 
-d=cfg['config1']
 
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string(
     'config',
-    d,
+    cfg['config1'],
     "Which config to use. Must be one of 'basic_improv', 'attention_improv', "
     "or 'chord_pitches_improv'.")
 tf.app.flags.DEFINE_string(
