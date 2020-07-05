@@ -4,8 +4,6 @@ from config import cfg
 
 FLAGS = tf.app.flags.FLAGS
 
-tf.app.flags.DEFINE_string('config', 'onsets_frames',
-                           'Name of the config to use.')
 tf.app.flags.DEFINE_string('model_dir', cfg['model_dir'], 'Path to look for acoustic checkpoints.')
 tf.app.flags.DEFINE_string(
     'checkpoint_path', None,
@@ -17,11 +15,6 @@ tf.app.flags.DEFINE_boolean(
 tf.app.flags.DEFINE_string(
     'run_dir', None,
     'Path to the directory where the latest checkpoint will be loaded from.')
-tf.app.flags.DEFINE_string(
-    'bundle_file', cfg['bundle_file2'],
-    'Path to the bundle file. If specified, this will take priority over '
-    'run_dir, unless save_generator_bundle is True, in which case both this '
-    'flag and run_dir are required')
 tf.app.flags.DEFINE_boolean(
     'save_generator_bundle', False,
     'If true, instead of generating a sequence, will save this generator as a '
@@ -85,11 +78,6 @@ tf.app.flags.DEFINE_string(
     'log', 'INFO',
     'The threshold for what messages will be logged DEBUG, INFO, WARN, ERROR, '
     'or FATAL.')
-tf.app.flags.DEFINE_string(
-    'hparams', cfg["hparams"],
-    'Comma-separated list of `name=value` pairs. For each pair, the value of '
-    'the hyperparameter named `name` is set to `value`. This mapping is merged '
-    'with the default hyperparameters.')
 tf.app.flags.DEFINE_integer(
     'steps_per_chord', 16,
     'The number of melody steps to take per backing chord. Each step is a 16th '

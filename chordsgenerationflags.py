@@ -33,11 +33,7 @@ tf.app.flags.DEFINE_string(
     'generator_description',
     None,
     'A description of the generator, overriding the default.')
-tf.app.flags.DEFINE_string(
-    'hparams', '',
-    'Comma-separated list of `name=value` pairs. For each pair, the value of '
-    'the hyperparameter named `name` is set to `value`. This mapping is merged '
-    'with the default hyperparameters.')
+
 
 
 class ImprovRnnConfigError(Exception):

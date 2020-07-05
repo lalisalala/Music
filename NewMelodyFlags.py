@@ -20,7 +20,7 @@ import tensorflow.compat.v1 as tf
 from tensorflow.contrib import training as contrib_training
 from config import cfg
 
-
+if __name__=='__main__':
 FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string(
     'config',
@@ -42,11 +42,6 @@ tf.app.flags.DEFINE_string(
     None,
     'A description of the generator. Overrides the default if `--config` is '
     'also supplied.')
-tf.app.flags.DEFINE_string(
-    'hparams', '',
-    'Comma-separated list of `name=value` pairs. For each pair, the value of '
-    'the hyperparameter named `name` is set to `value`. This mapping is merged '
-    'with the default hyperparameters.')
 
 
 class MelodyRnnConfigError(Exception):

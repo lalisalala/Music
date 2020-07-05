@@ -32,7 +32,6 @@ from Flags import FLAGS
 
 
 if __name__=='__main__':
-    tf.app.flags.
     FLAGS = tf.app.flags.FLAGS
     tf.app.flags.DEFINE_string(
         'run_dir', None,
@@ -132,7 +131,7 @@ def get_bundle():
   return sequence_generator_bundle.read_bundle_file(bundle_file)
 
 
-def run_with_flags(generator):
+def run_with_flags(generator, midi_path = None):
   """Generates melodies and saves them as MIDI files.
 
   Uses the options specified by the flags defined in this module.
@@ -146,6 +145,8 @@ def run_with_flags(generator):
   FLAGS.output_dir = os.path.expanduser(FLAGS.output_dir)
 
   primer_midi = None
+  if midi_path is not None:
+      primer_midi = midi_path
   if FLAGS.primer_midi:
     primer_midi = os.path.expanduser(FLAGS.primer_midi)
 
@@ -215,7 +216,7 @@ def run_with_flags(generator):
   for i in range(FLAGS.num_outputs):
     generated_sequence = generator.generate(input_sequence, generator_options)
 
-    midi_filename = '%s_%s.mid' % (date_and_time, str(i + 1).zfill(digits))
+    midi_filename = primer_midi.replace('.midi,', 'melody.midi')
     midi_path = os.path.join(FLAGS.output_dir, midi_filename)
     magenta.music.sequence_proto_to_midi_file(generated_sequence, midi_path)
 
@@ -250,7 +251,7 @@ def main(unused_argv):
     tf.logging.info('Saving generator bundle to %s', bundle_filename)
     generator.create_bundle_file(bundle_filename, FLAGS.bundle_description)
   else:
-    run_with_flags(generator)
+    run_with_flags(generator, unused_argv)
 
 
 def console_entry_point():
