@@ -9,13 +9,14 @@ from PyQt5 import QtCore
 from magenta.models.onsets_frames_transcription import configs
 from magenta.models.onsets_frames_transcription import data
 from pathlib import Path
-from chordsgeneration import main
-from NewMelody import main
-from ImproviseFurtherwithBach import main
 from Improvisefurther import main
+from ImproviseFurtherwithBach import main as main1
+from NewMelody import main as main2
+from chordsgeneration import main as main3
 import subprocess
 import tensorflow.compat.v1 as tf
 from config import cfg
+
 
 
 
@@ -59,7 +60,7 @@ class App(QWidget):
         self.buttonchords = QPushButton('Harmonize', self)
         self.buttonchords.setToolTip('The AI will create harmonizing chords')
         self.buttonchords.move(300,130)
-        self.buttonchords.clicked.connect(self.chords())
+        self.buttonchords.clicked.connect(self.chords)
         self.buttonsheet=QPushButton('Show Sheet Music', self)
         self.buttonsheet.setToolTip('Opens MuseScore to display Sheet Music')
         self.buttonsheet.move(200,100)
@@ -72,15 +73,6 @@ class App(QWidget):
         if self.filePath is None:
             QMessageBox.about(self,'No File',"No File was selected, please select a file to transcribe")
         else:
-            tf.flags.FLAGS.__delattr__('hparams')
-            tf.app.flags.DEFINE_string(
-                'hparams', cfg["hparams"],
-                'Comma-separated list of `name=value` pairs. For each pair, the value of '
-                'the hyperparameter named `name` is set to `value`. This mapping is merged '
-                'with the default hyperparameters.')
-            tf.flags.FLAGS.__delattr__('config')
-            tf.app.flags.DEFINE_string('config', 'onsets_frames',
-                                       'Name of the config to use.')
             run(['', self.filePath], config_map=configs.CONFIG_MAP, data_fn=data.provide_batch)
             self.midiPath = self.filePath + '.midi'
 
@@ -91,12 +83,7 @@ class App(QWidget):
         if self.midiPath is None:
             QMessageBox.about(self, "No file", "No File was selected, please select a Midi file to improvise to")
         else:
-            tf.flags.FLAGS.__delattr__('bundle_file')
-            tf.app.flags.DEFINE_string(
-                'bundle_file', cfg['bundle_file2'],
-                'Path to the bundle file. If specified, this will take priority over '
-                'run_dir, unless save_generator_bundle is True, in which case both this '
-                'flag and run_dir are required')
+            setattr(FLAGS, 'bundle_file', cfg['bundle_file2'])
             main(self.midiPath)
             self.midiPath = self.filePath + '.improv.midi'
 
@@ -104,61 +91,33 @@ class App(QWidget):
         if self.midiPath is None:
             QMessageBox.about(self, "No file", "No File was selected, please select a Midi file to improvise to")
         else:
-            tf.flags.FLAGS.__delattr__('bundle_file')
-            tf.app.flags.DEFINE_string(
-                'bundle_file', cfg['bundle_file3'],
-                'Path to the bundle file. If specified, this will take priority over '
-                'run_dir, unless save_generator_bundle is True, in which case both this '
-                'flag and run_dir are required')
-            main(self.midiPath)
+            setattr(FLAGS, 'bundle_file', cfg['bundle_file3'])
+            main1(self.midiPath)
             self.midiPath = self.filePath + '.bach.midi'
 
     def melody(self):
         if self.midiPath is None:
             QMessageBox.about(self, "No file", "No File was selected, please select a Midi file to improvise to")
         else:
-            tf.flags.FLAGS.__delattr__('hparams')
-            tf.flags.FLAGS.__delattr__('config')
-            tf.app.flags.DEFINE_string(
-                'config',
-                cfg['config2'],
-                "Which config to use. Must be one of 'basic', 'lookback', or 'attention'. "
-                "Mutually exclusive with `--melody_encoder_decoder`.")
-            tf.flags.FLAGS.__delattr__('bundle_file')
-            tf.app.flags.DEFINE_string(
-                'bundle_file', cfg['bundle_file4'],
-                'Path to the bundle file. If specified, this will take priority over '
-                'run_dir and checkpoint_file, unless save_generator_bundle is True, in '
-                'which case both this flag and either run_dir or checkpoint_file are '
-                'required')
-            main(self.midiPath)
+            setattr(FLAGS,'config', cfg['config2'])
+            setattr(FLAGS, 'bundle_file',  cfg['bundle_file4'])
+            main2(self.midiPath)
             self.midiPath = self.filePath + '.melody.midi'
 
     def chords(self):
         if self.midiPath is None:
             QMessageBox.about(self, "No file", "No File was selected, please select a Midi file to improvise to")
         else:
-            tf.flags.FLAGS.__delattr__('hparams')
-            tf.flags.FLAGS.__delattr__('config')
-            tf.app.flags.DEFINE_string(
-                'config',
-                cfg['config1'],
-                "Which config to use. Must be one of 'basic_improv', 'attention_improv', "
-                "or 'chord_pitches_improv'.")
-            tf.flags.FLAGS.__delattr__('bundle_file')
-            tf.app.flags.DEFINE_string(
-                'bundle_file', cfg['bundle_file1'],
-                'Path to the bundle file. If specified, this will take priority over '
-                'run_dir, unless save_generator_bundle is True, in which case both this '
-                'flag and run_dir are required')
-            main(self.midiPath)
+            setattr(FLAGS,'config', cfg['config1'])
+            setattr(FLAGS, 'bundle_file', cfg['bundle_file1'])
+            main3(self.midiPath)
             self.midiPath = self.filePath + '.chords.midi'
 
 
 
 
     def sheetmusic(self):
-        subprocess.run(['C:/Program Files/MuseScore 3/bin/MuseScore3.exe'])
+        subprocess.run(['C:/Program Files/MuseScore 3/bin/MuseScore3.exe', self.midiPath])
 
 
 

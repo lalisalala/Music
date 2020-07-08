@@ -63,7 +63,7 @@ if __name__=='__main__':
         'output_dir', cfg['output_dir'],
         'The directory where MIDI files will be saved to.')
     tf.app.flags.DEFINE_integer(
-        'num_outputs', 10,
+        'num_outputs', 1,
         'The number of lead sheets to generate. One MIDI file will be created for '
         'each.')
     tf.app.flags.DEFINE_integer(
@@ -158,7 +158,7 @@ def run_with_flags(generator, midi_path = None):
   FLAGS.output_dir = os.path.expanduser(FLAGS.output_dir)
 
   primer_midi = None
-  if primer_midi is not None:
+  if midi_path is not None:
       primer_midi = midi_path
   if FLAGS.primer_midi:
     primer_midi = os.path.expanduser(FLAGS.primer_midi)

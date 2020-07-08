@@ -22,11 +22,7 @@ from config import cfg
 
 if __name__=='__main__':
 FLAGS = tf.app.flags.FLAGS
-tf.app.flags.DEFINE_string(
-    'config',
-    cfg['config2'],
-    "Which config to use. Must be one of 'basic', 'lookback', or 'attention'. "
-    "Mutually exclusive with `--melody_encoder_decoder`.")
+
 tf.app.flags.DEFINE_string(
     'melody_encoder_decoder',
     None,

@@ -3,7 +3,13 @@ from config import cfg
 
 
 FLAGS = tf.app.flags.FLAGS
-
+tf.app.flags.DEFINE_string('config', 'onsets_frames',
+                           'Name of the config to use.')
+tf.app.flags.DEFINE_string(
+    'bundle_file', '',
+    'Path to the bundle file. If specified, this will take priority over '
+    'run_dir, unless save_generator_bundle is True, in which case both this '
+    'flag and run_dir are required')
 tf.app.flags.DEFINE_string('model_dir', cfg['model_dir'], 'Path to look for acoustic checkpoints.')
 tf.app.flags.DEFINE_string(
     'checkpoint_path', None,
@@ -96,3 +102,15 @@ tf.app.flags.DEFINE_float(
 tf.app.flags.DEFINE_integer(
     'steps_per_iteration', 1,
     'The number of melody steps to take per beam search iteration.')
+tf.app.flags.DEFINE_string(
+    'hparams', cfg["hparams"],
+    'Comma-separated list of `name=value` pairs. For each pair, the value of '
+    'the hyperparameter named `name` is set to `value`. This mapping is merged '
+    'with the default hyperparameters.')
+tf.app.flags.DEFINE_boolean(
+    'render_chords', True,
+    'If true, the backing chords will also be rendered as notes in the output '
+    'MIDI files.')
+tf.app.flags.DEFINE_string(
+        'checkpoint_file', None,
+        'Path to the checkpoint file. run_dir will take priority over this flag.')
