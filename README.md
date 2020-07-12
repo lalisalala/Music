@@ -38,7 +38,7 @@ After transcribing you can press the other buttons, to try out the improvisation
 
 When your Python Code says, that there was an error, you have to restart this GUI, as this GUI will continue, even though an error occurred. 
 
-###FYI
+### FYI
 This project is in its prime and far from being fully developed yet. It is a simple, fun tool to play around with. The algorithm for note detection might not always be 100% accurate. If errors occur, feel free to leave a comment on this GitLab.
 I will be trying to frequently update this GitLab.   
 

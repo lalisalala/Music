@@ -2,9 +2,9 @@ import sys
 import subprocess
 from Flags import FLAGS
 from WaveToMidiTranscription import run
-from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import QApplication, QWidget, QProgressBar, QInputDialog, QLineEdit, QFileDialog, QPushButton,QMessageBox
-from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import pyqtSlot, QSize
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QImage, QPalette, QBrush
 from PyQt5 import QtCore
 from magenta.models.onsets_frames_transcription import configs
 from magenta.models.onsets_frames_transcription import data
@@ -25,9 +25,9 @@ class App(QWidget):
 
     def __init__(self):
         super().__init__()
-        self.title = 'PyQt5 file dialogs - pythonspot.com'
-        self.left = 10
-        self.top = 10
+        self.title = 'Automatic Music Transcription and Generation'
+        self.left = 30
+        self.top = 30
         self.width = 640
         self.height = 480
         self.filePath=None
@@ -40,36 +40,41 @@ class App(QWidget):
 
         self.buttontranscribe = QPushButton('Transcribe', self)
         self.buttontranscribe.setToolTip('Transcribe the wav data')
-        self.buttontranscribe.move(100,70)
+        self.buttontranscribe.move(350,100)
         self.buttontranscribe.clicked.connect(self.execute)
-        self.buttonfilewav= QPushButton('Select File to transcribe', self)
+        self.buttonfilewav= QPushButton('Select File to Transcribe', self)
         self.buttonfilewav.setToolTip('Select the file that you want to transcribe')
-        self.buttonfilewav.move(300,70)
+        self.buttonfilewav.move(0,0)
         self.buttonfilewav.clicked.connect(self.selectFile)
         self.buttonimprov= QPushButton('Improvise Further', self)
-        self.buttonimprov.setToolTip('The AI will generate a new sequence')
-        self.buttonimprov.move(100, 100)
+        self.buttonimprov.setToolTip('The AI will generate a New Sequence')
+        self.buttonimprov.move(180, 190)
         self.buttonimprov.clicked.connect(self.improvise)
         self.buttonbach= QPushButton('Improv by Bach', self)
-        self.buttonbach.setToolTip('The AI will generate a new sequence BachStyle')
-        self.buttonbach.move(300,100)
+        self.buttonbach.setToolTip('The AI will generate a New Sequence BachStyle')
+        self.buttonbach.move(300,130)
         self.buttonbach.clicked.connect(self.bach)
-        self.buttonNewMelody = QPushButton ('Create a new Melody', self)
+        self.buttonNewMelody = QPushButton ('Create a New Melody', self)
         self.buttonNewMelody.setToolTip('The AI will create a new melody')
-        self.buttonNewMelody.move(100,130)
+        self.buttonNewMelody.move(230,160)
         self.buttonNewMelody.clicked.connect(self.melody)
         self.buttonchords = QPushButton('Harmonize', self)
         self.buttonchords.setToolTip('The AI will create harmonizing chords')
-        self.buttonchords.move(300,130)
+        self.buttonchords.move(125, 220)
         self.buttonchords.clicked.connect(self.chords)
         self.buttonsheet=QPushButton('Show Sheet Music', self)
         self.buttonsheet.setToolTip('Opens MuseScore to display Sheet Music')
-        self.buttonsheet.move(200,100)
+        self.buttonsheet.move(530,450)
         self.buttonsheet.clicked.connect(self.sheetmusic)
         self.buttonmidi=QPushButton ('Select a Midi file', self)
         self.buttonmidi.setToolTip('Select a Midi File that you want to process')
-        self.buttonmidi.move(300,200)
+        self.buttonmidi.move(120,0)
         self.buttonmidi.clicked.connect(self.selectMidi)
+        picture = QImage('Piano1.jpg')
+        spicture = picture.scaled(QSize(640,480))
+        palette = QPalette()
+        palette.setBrush(10, QBrush(spicture))
+        self.setPalette(palette)
 
 
         self.show()
