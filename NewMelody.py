@@ -171,7 +171,7 @@ def run_with_flags(generator, midi_path = None):
   # Derive the total number of seconds to generate based on the QPM of the
   # priming sequence and the num_steps flag.
   seconds_per_step = 60.0 / qpm / generator.steps_per_quarter
-  total_seconds = FLAGS.num_steps * seconds_per_step
+  total_seconds = FLAGS.num_steps * seconds_per_step + len(primer_midi)
 
   # Specify start/stop time for generation based on starting generation at the
   # end of the priming sequence and continuing until the sequence is num_steps

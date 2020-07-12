@@ -3,7 +3,7 @@ import subprocess
 from Flags import FLAGS
 from WaveToMidiTranscription import run
 from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog, QPushButton,QMessageBox
+from PyQt5.QtWidgets import QApplication, QWidget, QProgressBar, QInputDialog, QLineEdit, QFileDialog, QPushButton,QMessageBox
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtCore
 from magenta.models.onsets_frames_transcription import configs
@@ -16,6 +16,7 @@ from chordsgeneration import main as main3
 import subprocess
 import tensorflow.compat.v1 as tf
 from config import cfg
+import time
 
 
 
@@ -65,6 +66,11 @@ class App(QWidget):
         self.buttonsheet.setToolTip('Opens MuseScore to display Sheet Music')
         self.buttonsheet.move(200,100)
         self.buttonsheet.clicked.connect(self.sheetmusic)
+        self.buttonmidi=QPushButton ('Select a Midi file', self)
+        self.buttonmidi.setToolTip('Select a Midi File that you want to process')
+        self.buttonmidi.move(300,200)
+        self.buttonmidi.clicked.connect(self.selectMidi)
+
 
         self.show()
 
@@ -75,9 +81,13 @@ class App(QWidget):
         else:
             run(['', self.filePath], config_map=configs.CONFIG_MAP, data_fn=data.provide_batch)
             self.midiPath = self.filePath + '.midi'
+            QMessageBox.about(self,'Success!', 'Transcription was successful, the Midi was written to ' + self.midiPath)
 
     def selectFile(self):
         self.filePath = QFileDialog.getOpenFileName(self, "Open a Wave file", "", "Wave File (*.wav)")[0]
+
+    def selectMidi(self):
+        self.midiPath = QFileDialog.getOpenFileName(self, "Open a Midi File", "", "Midi File (*.midi)")[0]
 
     def improvise(self):
         if self.midiPath is None:
@@ -85,7 +95,10 @@ class App(QWidget):
         else:
             setattr(FLAGS, 'bundle_file', cfg['bundle_file2'])
             main(self.midiPath)
-            self.midiPath = self.filePath + '.improv.midi'
+            if self.filePath is None:
+                self.midiPath = self.midiPath.replace('midi', "improv.midi")
+            else:
+                self.midiPath = self.filePath + '.improv.midi'
 
     def bach(self):
         if self.midiPath is None:
@@ -93,7 +106,11 @@ class App(QWidget):
         else:
             setattr(FLAGS, 'bundle_file', cfg['bundle_file3'])
             main1(self.midiPath)
-            self.midiPath = self.filePath + '.bach.midi'
+            if self.filePath is None:
+                self.midiPath = self.midiPath.replace('midi', "bach.midi")
+            else:
+                self.midiPath = self.filePath + '.bach.midi'
+
 
     def melody(self):
         if self.midiPath is None:
@@ -102,7 +119,10 @@ class App(QWidget):
             setattr(FLAGS,'config', cfg['config2'])
             setattr(FLAGS, 'bundle_file',  cfg['bundle_file4'])
             main2(self.midiPath)
-            self.midiPath = self.filePath + '.melody.midi'
+            if self.filePath is None:
+                self.midiPath = self.midiPath.replace('midi', "melody.midi")
+            else:
+                self.midiPath = self.filePath + '.melody.midi'
 
     def chords(self):
         if self.midiPath is None:
@@ -111,13 +131,13 @@ class App(QWidget):
             setattr(FLAGS,'config', cfg['config1'])
             setattr(FLAGS, 'bundle_file', cfg['bundle_file1'])
             main3(self.midiPath)
-            self.midiPath = self.filePath + '.chords.midi'
-
-
-
+            if self.filePath is None:
+                self.midiPath = self.midiPath.replace('midi', "chords.midi")
+            else:
+                self.midiPath = self.filePath + '.chords.midi'
 
     def sheetmusic(self):
-        subprocess.run(['C:/Program Files/MuseScore 3/bin/MuseScore3.exe', self.midiPath])
+        subprocess.run([cfg['MuseScore'], self.midiPath])
 
 
 
