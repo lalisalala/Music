@@ -20,7 +20,7 @@ import tensorflow.compat.v1 as tf
 from tensorflow.contrib import training as contrib_training
 from config import cfg
 
-if __name__=='__main__':
+
 FLAGS = tf.app.flags.FLAGS
 
 tf.app.flags.DEFINE_string(

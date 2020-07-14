@@ -216,7 +216,7 @@ def run_with_flags(generator, midi_path = None):
   for i in range(FLAGS.num_outputs):
     generated_sequence = generator.generate(input_sequence, generator_options)
 
-    midi_filename = primer_midi.replace('midi,', 'melody.midi')
+    midi_filename = primer_midi.replace('midi', 'melody.midi')
     midi_path = os.path.join(FLAGS.output_dir, midi_filename)
     magenta.music.sequence_proto_to_midi_file(generated_sequence, midi_path)
 
