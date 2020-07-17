@@ -2,21 +2,19 @@ import sys
 import subprocess
 from Flags import FLAGS
 from WaveToMidiTranscription import run
-from PyQt5.QtCore import pyqtSlot, QSize
+from PyQt5.QtCore import pyqtSlot, QSize, QTimer
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QImage, QPalette, QBrush
-from PyQt5 import QtCore
 from magenta.models.onsets_frames_transcription import configs
 from magenta.models.onsets_frames_transcription import data
-from pathlib import Path
+import pathlib
 from Improvisefurther import main
 from ImproviseFurtherwithBach import main as main1
 from NewMelody import main as main2
 from chordsgeneration import main as main3
 import subprocess
-import tensorflow.compat.v1 as tf
 from config import cfg
-import time
+from Micro import record
 
 
 
@@ -46,6 +44,10 @@ class App(QWidget):
         self.buttonfilewav.setToolTip('Select the file that you want to transcribe')
         self.buttonfilewav.move(0,0)
         self.buttonfilewav.clicked.connect(self.selectFile)
+        self.buttonmicro = QPushButton('Record Your Piece', self)
+        self.buttonmicro.setToolTip('Records 5 seconds')
+        self.buttonmicro.move(200,0)
+        self.buttonmicro.clicked.connect(self.record)
         self.buttonimprov= QPushButton('Improvise Further', self)
         self.buttonimprov.setToolTip('The AI will generate a New Sequence')
         self.buttonimprov.move(180, 190)
@@ -93,6 +95,12 @@ class App(QWidget):
 
     def selectMidi(self):
         self.midiPath = QFileDialog.getOpenFileName(self, "Open a Midi File", "", "Midi File (*.midi)")[0]
+
+    def record(self):
+        record()
+        self.filePath = str(pathlib.Path(__file__).parent.absolute() / "record.wav")
+
+
 
     def improvise(self):
         if self.midiPath is None:
