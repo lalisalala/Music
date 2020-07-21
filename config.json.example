@@ -7,7 +7,7 @@
   "bundle_file3": "Path to /polyphony_rnn.mag",
   "bundle_file4": "Path to /attention_rnn.mag",
   "config1": "chord_pitches_improv",
-  "config2": "attention_rnn"
-  "MuseScore: "Path to /MuseScore3.exe"
+  "config2": "attention_rnn",
+  "MuseScore": "Path to /MuseScore3.exe"
 
 }
