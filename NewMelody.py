@@ -29,6 +29,7 @@ from magenta.music.protobuf import music_pb2
 import tensorflow.compat.v1 as tf
 from config import cfg
 
+
 def get_bundle():
     """Returns a generator_pb2.GeneratorBundle object based read from bundle_file.
 
@@ -53,7 +54,6 @@ def run_with_flags(generator, midi_path=None):
 
     if not tf.gfile.Exists(output_dir):
         tf.gfile.MakeDirs(output_dir)
-
 
     qpm = magenta.music.DEFAULT_QUARTERS_PER_MINUTE
     primer_sequence = magenta.music.midi_file_to_sequence_proto(primer_midi)
