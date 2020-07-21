@@ -1,6 +1,4 @@
 import sys
-import subprocess
-from Flags import FLAGS
 from WaveToMidiTranscription import run
 from PyQt5.QtCore import pyqtSlot, QSize, QTimer
 from PyQt5.QtWidgets import *
@@ -106,7 +104,6 @@ class App(QWidget):
         if self.midiPath is None:
             QMessageBox.about(self, "No file", "No File was selected, please select a Midi file to improvise to")
         else:
-            setattr(FLAGS, 'bundle_file', cfg['bundle_file2'])
             main(self.midiPath)
             if self.filePath is None:
                 self.midiPath = self.midiPath.replace('midi', "improv.midi")
@@ -117,7 +114,6 @@ class App(QWidget):
         if self.midiPath is None:
             QMessageBox.about(self, "No file", "No File was selected, please select a Midi file to improvise to")
         else:
-            setattr(FLAGS, 'bundle_file', cfg['bundle_file3'])
             main1(self.midiPath)
             if self.filePath is None:
                 self.midiPath = self.midiPath.replace('midi', "bach.midi")
@@ -129,8 +125,6 @@ class App(QWidget):
         if self.midiPath is None:
             QMessageBox.about(self, "No file", "No File was selected, please select a Midi file to improvise to")
         else:
-            setattr(FLAGS,'config', cfg['config2'])
-            setattr(FLAGS, 'bundle_file',  cfg['bundle_file4'])
             main2(self.midiPath)
             if self.filePath is None:
                 self.midiPath = self.midiPath.replace('midi', "melody.midi")
@@ -141,8 +135,6 @@ class App(QWidget):
         if self.midiPath is None:
             QMessageBox.about(self, "No file", "No File was selected, please select a Midi file to improvise to")
         else:
-            setattr(FLAGS,'config', cfg['config1'])
-            setattr(FLAGS, 'bundle_file', cfg['bundle_file1'])
             main3(self.midiPath)
             if self.filePath is None:
                 self.midiPath = self.midiPath.replace('midi', "chords.midi")
