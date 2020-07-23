@@ -10,24 +10,34 @@ from config import cfg
 
 
 def get_bundle():
-    """Returns a generator_pb2.GeneratorBundle object based read from bundle_file.
-
-    Returns:
-      Either a generator_pb2.GeneratorBundle or None if the bundle_file flag is
-      not set or the save_generator_bundle flag is set.
+    """ Specifies a bundle_file (pre-trained Model) to use to generate.
+    This bundle_file can be set in config.json at 'bundle_file_improv'.
     """
     bundle_file = os.path.expanduser(cfg['bundle_file_improv'])
     return sequence_generator_bundle.read_bundle_file(bundle_file)
 
 
-def run_with_flags(generator, midi_path=None):
-    """Generates pianoroll tracks and saves them as MIDI files.
+def generate_sequence(midi_path=None):
+    """Generates a polyphonic sequence based on Midi Input
+    Input parameter: Midi File as Primer Midi"""
 
-    Uses the options specified by the flags defined in this module.
+    tf.logging.set_verbosity('INFO')
 
-    Args:
-      generator: The PianorollRnnNadeSequenceGenerator to use for generation.
-    """
+    bundle = get_bundle()
+
+    config_id = bundle.generator_details.id
+    config = pianoroll_rnn_nade_model.default_configs[config_id]
+    config.hparams.parse(cfg['hparams'])
+    # Having too large of a batch size will slow generation down unnecessarily.
+    config.hparams.batch_size = min(
+        config.hparams.batch_size, 1)
+
+    generator = PianorollRnnNadeSequenceGenerator(
+        model=pianoroll_rnn_nade_model.PianorollRnnNadeModel(config),
+        details=config.details,
+        steps_per_quarter=config.steps_per_quarter,
+        checkpoint=None,
+        bundle=bundle)
 
     output_dir = os.path.expanduser(cfg['output_dir'])
     primer_midi = os.path.expanduser(midi_path)

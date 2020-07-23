@@ -21,7 +21,7 @@ def record():
 
     frames = []  # Initialize array to store frames
 
-    # Store data in chunks for 3 seconds
+    # Store data in chunks for 5 seconds
     for i in range(0, int(fs / chunk * seconds)):
         data = stream.read(chunk)
         frames.append(data)

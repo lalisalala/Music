@@ -12,24 +12,33 @@ from config import cfg
 
 
 def get_bundle():
-    """Returns a generator_pb2.GeneratorBundle object based read from bundle_file.
-
-    Returns:
-      Either a generator_pb2.GeneratorBundle or None if the bundle_file flag is
-      not set or the save_generator_bundle flag is set.
-    """
+    """Sets the bundle file (pre-trained model), which is assigned in the config.json at 'bundle_file_bach'"""
     bundle_file = os.path.expanduser(cfg['bundle_file_bach'])
     return sequence_generator_bundle.read_bundle_file(bundle_file)
 
 
-def run_with_flags(generator, midi_path=None):
-    """Generates polyphonic tracks and saves them as MIDI files.
-
-    Uses the options specified by the flags defined in this module.
-
-    Args:
-      generator: The PolyphonyRnnSequenceGenerator to use for generation.
+def generate_bach_sequence(midi_path=None):
+    """ Generates a polyphonic sequence based on the Bach Chorales dataset
+    Input argument: Midi that is used as Primer Midi
     """
+    tf.logging.set_verbosity('INFO')
+
+    bundle = get_bundle()
+
+    config_id = bundle.generator_details.id
+    config = polyphony_model.default_configs[config_id]
+    config.hparams.parse(cfg['hparams'])
+    # Having too large of a batch size will slow generation down unnecessarily.
+    config.hparams.batch_size = min(
+        config.hparams.batch_size, 1)
+
+    generator = polyphony_sequence_generator.PolyphonyRnnSequenceGenerator(
+        model=polyphony_model.PolyphonyRnnModel(config),
+        details=config.details,
+        steps_per_quarter=config.steps_per_quarter,
+        checkpoint=None,
+        bundle=bundle)
+
     output_dir = os.path.expanduser(cfg['output_dir'])
     primer_midi = os.path.expanduser(midi_path)
 
@@ -94,26 +103,3 @@ def run_with_flags(generator, midi_path=None):
 
     tf.logging.info('Wrote %d MIDI files to %s',
                     1, output_dir)
-
-
-def main(unused_argv):
-    """Saves bundle or runs generator based on flags."""
-    tf.logging.set_verbosity('INFO')
-
-    bundle = get_bundle()
-
-    config_id = bundle.generator_details.id
-    config = polyphony_model.default_configs[config_id]
-    config.hparams.parse(cfg['hparams'])
-    # Having too large of a batch size will slow generation down unnecessarily.
-    config.hparams.batch_size = min(
-        config.hparams.batch_size, 1)
-
-    generator = polyphony_sequence_generator.PolyphonyRnnSequenceGenerator(
-        model=polyphony_model.PolyphonyRnnModel(config),
-        details=config.details,
-        steps_per_quarter=config.steps_per_quarter,
-        checkpoint=None,
-        bundle=bundle)
-
-    run_with_flags(generator, unused_argv)
