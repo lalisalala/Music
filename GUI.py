@@ -1,18 +1,18 @@
 import sys
-from WaveToMidiTranscription import run
-from PyQt5.QtCore import pyqtSlot, QSize, QTimer
+from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QImage, QPalette, QBrush
 from magenta.models.onsets_frames_transcription import configs
 from magenta.models.onsets_frames_transcription import data
 import pathlib
-from Improvisefurther import main
-from ImproviseFurtherwithBach import main as main1
-from NewMelody import main as main2
-from chordsgeneration import main as main3
+from processing.transcription import transcribe
+from processing.improv import generate_sequence
+from processing.bach import generate_bach_sequence
+from processing.melody import generate_new_melody
+from processing.chords import generate_chords
+from processing.recording import record
 import subprocess
 from config import cfg
-from Micro import record
 
 
 class App(QWidget):
@@ -80,7 +80,7 @@ class App(QWidget):
         if self.filePath is None:
             QMessageBox.about(self, 'No File', "No File was selected, please select a file to transcribe")
         else:
-            run(['', self.filePath], config_map=configs.CONFIG_MAP, data_fn=data.provide_batch)
+            transcribe(['', self.filePath], config_map=configs.CONFIG_MAP, data_fn=data.provide_batch)
             self.midiPath = self.filePath + '.midi'
             QMessageBox.about(self, 'Success!',
                               'Transcription was successful, the Midi was written to ' + self.midiPath)
@@ -99,7 +99,7 @@ class App(QWidget):
         if self.midiPath is None:
             QMessageBox.about(self, "No file", "No File was selected, please select a Midi file to improvise to")
         else:
-            main(self.midiPath)
+            generate_sequence(self.midiPath)
             if self.filePath is None:
                 self.midiPath = self.midiPath.replace('midi', "improv.midi")
             else:
@@ -109,7 +109,7 @@ class App(QWidget):
         if self.midiPath is None:
             QMessageBox.about(self, "No file", "No File was selected, please select a Midi file to improvise to")
         else:
-            main1(self.midiPath)
+            generate_bach_sequence(self.midiPath)
             if self.filePath is None:
                 self.midiPath = self.midiPath.replace('midi', "bach.midi")
             else:
@@ -119,7 +119,7 @@ class App(QWidget):
         if self.midiPath is None:
             QMessageBox.about(self, "No file", "No File was selected, please select a Midi file to improvise to")
         else:
-            main2(self.midiPath)
+            generate_new_melody(self.midiPath)
             if self.filePath is None:
                 self.midiPath = self.midiPath.replace('midi', "melody.midi")
             else:
@@ -129,7 +129,7 @@ class App(QWidget):
         if self.midiPath is None:
             QMessageBox.about(self, "No file", "No File was selected, please select a Midi file to improvise to")
         else:
-            main3(self.midiPath)
+            generate_chords(self.midiPath)
             if self.filePath is None:
                 self.midiPath = self.midiPath.replace('midi', "chords.midi")
             else:

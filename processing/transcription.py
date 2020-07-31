@@ -15,7 +15,8 @@ from config import cfg
 
 
 def create_example(filename, sample_rate, load_audio_with_librosa):
-    """Opens the specified audio file and turns it into a example"""
+    """Opens the specified audio file and turns it into a example
+    Input and output are all set."""
     wav_data = tf.gfile.Open(filename, 'rb').read()
     example_list = list(
         audio_label_data_utils.process_record(
@@ -34,7 +35,8 @@ def create_example(filename, sample_rate, load_audio_with_librosa):
 
 def transcribe(argv, config_map, data_fn):
     """Transcribes a Wave File to Midi using the specified dataset
-    Input parameter: Wave File to transcribe"""
+    Input parameter: Wave File to transcribe
+    Output: Midifile saved as "Wavefile.midi in the same location"""
     tf.logging.set_verbosity('INFO')
 
     config = config_map[cfg['config_transcription']]

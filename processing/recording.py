@@ -2,7 +2,9 @@ import pyaudio
 import wave
 
 def record():
-    """Records 5 seconds on your recording device and saves it as Wave file in the current file"""
+    """Records 5 seconds on your recording device and saves it as Wave file in the current file
+    Input = None
+    Output = Wave file in same location as record.wav"""
     chunk = 1024  # Record in chunks of 1024 samples
     sample_format = pyaudio.paInt16  # 16 bits per sample
     channels = 2

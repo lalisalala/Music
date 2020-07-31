@@ -12,14 +12,17 @@ from config import cfg
 
 
 def get_bundle():
-    """Sets the bundle file (pre-trained model), which is assigned in the config.json at 'bundle_file_bach'"""
+    """Sets the bundle file (pre-trained model), which is assigned in the config.json at 'bundle_file_bach'
+    Input is None, Output is None"""
     bundle_file = os.path.expanduser(cfg['bundle_file_bach'])
     return sequence_generator_bundle.read_bundle_file(bundle_file)
 
 
 def generate_bach_sequence(midi_path=None):
     """ Generates a polyphonic sequence based on the Bach Chorales dataset
-    Input argument: Midi that is used as Primer Midi
+    Input argument: Path to Midifile that is used as Primer Midi,
+    in this application automatically set as the transcribed Midi from WaveToMidiTranscription
+    Output: Midifile titled "midifilename.bach.midi" in same location
     """
     tf.logging.set_verbosity('INFO')
 

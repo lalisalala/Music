@@ -20,14 +20,17 @@ CHORD_VELOCITY = 50
 
 def get_bundle():
     """ Gets the bundle from config.py, if you want to change it, go to your config.json and change 'bundle_file_chords'
+    Input = None
+    Output = None
     """
     bundle_file = os.path.expanduser(cfg['bundle_file_chords'])
     return sequence_generator_bundle.read_bundle_file(bundle_file)
 
 
-def chord_generation(midi_path=None):
+def generate_chords(midi_path=None):
     """Generates harmonizing chords and saves them as MIDI.
-    Input parameters : Midi to harmonize to (Primer Midi)
+    Input parameters : Midi to harmonize to (Primer Midi), automatically set to Midi from transcription.py
+    Output = Midifile named "Midifile.chords.midi" in same location
     """
 
     tf.logging.set_verbosity('INFO')

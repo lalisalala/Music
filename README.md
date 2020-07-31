@@ -1,5 +1,5 @@
 ## Automatic Music Transcription
-A code that uses Tensorflow and Magenta to detect musical notes in a Piano .wav file. It transcribes it onto a midi file. Additionally, you can choose from a variety of different applications:
+A prototype that uses Tensorflow and Magenta to detect musical notes in a Piano .wav file. It transcribes it onto a midi file. Additionally, you can choose from a variety of different applications to generate new piano sequences.
 ##### 1. What notes are these?  
 This program can transcribe your piano.wav files into .midi files. It uses Machine Learning for accurate note detection. Try it out! It's perfect to create sheet paper. Look at 6. for further information.
 ##### 2. Let this program be creative! 
@@ -15,7 +15,7 @@ Show whatever madness you just created on sheet paper to share it with others. T
 
 ### Setup
 Use `pip -m install tensorflow == 1.15.3` to install the specific version of TensorFlow that is compatible with Magenta.
-Then add Magenta by `pip install Magenta`. The current version should be 1.3.1. 
+Then add Magenta by `pip install Magenta`. The version used in this program is 1.3.1. 
 
 Get SoX from the Website: http://sox.sourceforge.net/ (32-Bit works on 64-Bit) and add it to your Path on your Computer. Tutorial for Windows: https://stackoverflow.com/questions/17667491/how-to-use-sox-in-windows 
 
@@ -36,11 +36,11 @@ When you have successfully updated all the paths in the config.jason.example, re
 Then run the GUI.py. A simple Graphical User Interface will pop up. Please make sure you select an existing .wav file before transcribing.
 After transcribing you can press the other buttons, to try out the improvisation skills. 
 
-When your Python Code says, that there was an error, you have to restart this GUI, as this GUI will continue, even though an error occurred. 
+When Python says, that there was an error, you have to restart this GUI, as this GUI will continue, even though an error occurred. 
 
 ### FYI
-This project is in its prime and far from being fully developed yet. It is a simple, fun tool to play around with. The algorithm for note detection might not always be 100% accurate. If errors occur, feel free to leave a comment on this GitLab.
-I will be trying to frequently update this GitLab.   
+This project is in its prime and far from being fully developed yet. It is a simple, fun tool to play around with. Since the developers of Magenta are still very actively updating their GitHub, this program will most probably show some deprecation warnings.  The algorithm for note detection might not always be 100% accurate. If errors occur, feel free to leave a comment on this GitLab.
+I will be trying to frequently update this GitLab. 
 
 
 

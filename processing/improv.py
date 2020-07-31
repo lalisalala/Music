@@ -12,6 +12,7 @@ from config import cfg
 def get_bundle():
     """ Specifies a bundle_file (pre-trained Model) to use to generate.
     This bundle_file can be set in config.json at 'bundle_file_improv'.
+    Input = None, Output = None"
     """
     bundle_file = os.path.expanduser(cfg['bundle_file_improv'])
     return sequence_generator_bundle.read_bundle_file(bundle_file)
@@ -19,7 +20,8 @@ def get_bundle():
 
 def generate_sequence(midi_path=None):
     """Generates a polyphonic sequence based on Midi Input
-    Input parameter: Midi File as Primer Midi"""
+    Input parameter: Midi File as Primer Midi, automatically set to Transcription midi from Transcribe.py if not else specified.
+    Output parameter : Midifile as "Midifile.improv.midi" in same location """
 
     tf.logging.set_verbosity('INFO')
 

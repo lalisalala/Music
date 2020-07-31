@@ -12,6 +12,8 @@ from config import cfg
 
 def get_bundle():
     """Gets the right bundle_file, you can specify your bundle file in the config.json 'bundle_file_melody'
+    Input = None
+    Output = None
     """
     bundle_file = os.path.expanduser(cfg['bundle_file_melody'])
     return sequence_generator_bundle.read_bundle_file(bundle_file)
@@ -20,6 +22,7 @@ def get_bundle():
 def generate_new_melody(midi_path=None):
     """Generates new melodies from Primer Midis and saves them as Midi.
     Input Argument: Midi file to be used as Primer Midi.
+    Output Argument: Midifile as "midifile.melody.midi" in the same location
     """
 
     tf.logging.set_verbosity('INFO')
