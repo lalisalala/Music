@@ -22,12 +22,12 @@ Get SoX from the Website: http://sox.sourceforge.net/ (32-Bit works on 64-Bit) a
 Downgrade the Numba Library to `0.48.0`. 
 
 Download all the pre-trained models and save them on your computer: 
- 1. Transcription: https://github.com/tensorflow/magenta/tree/master/magenta/models/onsets_frames_transcription (scroll down to Transcription Script, press on "checkpoint")
- 2. Melody Generation: https://github.com/magenta/magenta/tree/master/magenta/models/melody_rnn (attention_rnn model) 
- 3. Improvising Further: https://github.com/magenta/magenta/tree/master/magenta/models/pianoroll_rnn_nade (Get the pianoroll_rnn_nade model) 
- 4. Bach Improvising: https://github.com/magenta/magenta/tree/master/magenta/models/polyphony_rnn (polyphony_rnn model)
- 5. Harmonizing Chords: https://github.com/magenta/magenta/tree/master/magenta/models/improv_rnn (chord_pitches_improv model)
- 6. Creating Sheet Music: Download MuseScore3 from https://musescore.org/de/download/musescore.msi 
+ 1. model_dir: https://storage.googleapis.com/magentadata/models/onsets_frames_transcription/maestro_checkpoint.zip
+ 2. bundle_file_chords:https: http://download.magenta.tensorflow.org/models/chord_pitches_improv.mag
+ 3. bundle_file_improv: http://download.magenta.tensorflow.org/models/pianoroll_rnn_nade.mag
+ 4. bundle_file_bach: http://download.magenta.tensorflow.org/models/polyphony_rnn.mag
+ 5. bundle_file_melody: http://download.magenta.tensorflow.org/models/attention_rnn.mag
+ 6. Creating Sheet Music: https://musescore.org/de/download
 
 
 ### Usage
