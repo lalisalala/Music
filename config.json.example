@@ -1,11 +1,11 @@
 {
-  "model_dir": "Path to your maestro_checkpoint/train/",
+  "model_dir": "Path to your maestro_checkpoint/train/", link: https://github.com/tensorflow/magenta/tree/master/magenta/models/onsets_frames_transcription (scroll down to Transcription Script, press on "checkpoint")
   "hparams": "use_cudnn=false",
   "output_dir": "Path to your desired output folder",
-  "bundle_file_chords": "Path to /chord_pitches_improv.mag",
-  "bundle_file_improv": "Path to /pianoroll_rnn_nade.mag",
-  "bundle_file_bach": "Path to /polyphony_rnn.mag",
-  "bundle_file_melody": "Path to /attention_rnn.mag",
+  "bundle_file_chords": "Path to /chord_pitches_improv.mag", link: https://github.com/magenta/magenta/tree/master/magenta/models/improv_rnn (chord_pitches_improv model)
+  "bundle_file_improv": "Path to /pianoroll_rnn_nade.mag",  link: https://github.com/magenta/magenta/tree/master/magenta/models/pianoroll_rnn_nade (Get the pianoroll_rnn_nade model)
+  "bundle_file_bach": "Path to /polyphony_rnn.mag",  link: https://github.com/magenta/magenta/tree/master/magenta/models/polyphony_rnn (polyphony_rnn model)
+  "bundle_file_melody": "Path to /attention_rnn.mag", link: https://github.com/magenta/magenta/tree/master/magenta/models/melody_rnn (attention_rnn model)
   "config_transcription": "onsets_frames",
   "num_steps": usually 128,
   "MuseScore": "Path to /MuseScore3.exe"

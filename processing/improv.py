@@ -5,6 +5,8 @@ from magenta.models.shared import sequence_generator_bundle
 from magenta.music import constants
 from magenta.music.protobuf import generator_pb2
 from magenta.music.protobuf import music_pb2
+from magenta.models.pianoroll_rnn_nade import pianoroll_rnn_nade_model
+from magenta.models.pianoroll_rnn_nade.pianoroll_rnn_nade_sequence_generator import PianorollRnnNadeSequenceGenerator
 import tensorflow.compat.v1 as tf
 from config import cfg
 
