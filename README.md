@@ -1,4 +1,7 @@
 ## Automatic Music Transcription
+
+![Screenshot](Piano1.jpg)
+
 A prototype that uses Tensorflow and Magenta to detect musical notes in a Piano .wav file. It transcribes it onto a midi file. Additionally, you can choose from a variety of different applications to generate new piano sequences.
 ##### 1. What notes are these?  
 This program can transcribe your piano.wav files into .midi files. It uses Machine Learning for accurate note detection. Try it out! It's perfect to create sheet paper. Look at 6. for further information.
@@ -33,7 +36,10 @@ Download all the pre-trained models and save them on your computer:
 ### Usage
 In this GitLab, a config.json.example is included, please fill out all the right paths to your checkpoints and models. I would recommend to set up one folder that contains all the models.
 When you have successfully updated all the paths in the config.jason.example, rename it to config.json, in order for the code to utilize it. 
-Then run the GUI.py. A simple Graphical User Interface will pop up. Please make sure you select an existing .wav file before transcribing.
+Then run the GUI.py. A simple Graphical User Interface will pop up. 
+
+You can choose to upload a file from your local storage or record seven seconds from your microphone. 
+Please make sure you select an existing .wav file before transcribing.
 After transcribing you can press the other buttons, to try out the improvisation skills. 
 
 When Python says, that there was an error, you have to restart this GUI, as this GUI will continue, even though an error occurred. 

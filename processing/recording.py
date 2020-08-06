@@ -2,14 +2,14 @@ import pyaudio
 import wave
 
 def record():
-    """Records 5 seconds on your recording device and saves it as Wave file in the current file
+    """Records 7 seconds on your recording device and saves it as Wave file in the current file
     Input = None
     Output = Wave file in same location as record.wav"""
     chunk = 1024  # Record in chunks of 1024 samples
     sample_format = pyaudio.paInt16  # 16 bits per sample
     channels = 2
     fs = 44100  # Record at 44100 samples per second
-    seconds = 5
+    seconds = 7
     filename = "record.wav"
 
     p = pyaudio.PyAudio()  # Create an interface to PortAudio
@@ -24,7 +24,7 @@ def record():
 
     frames = []  # Initialize array to store frames
 
-    # Store data in chunks for 5 seconds
+    # Store data in chunks for 7 seconds
     for i in range(0, int(fs / chunk * seconds)):
         data = stream.read(chunk)
         frames.append(data)
