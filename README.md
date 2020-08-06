@@ -1,6 +1,6 @@
 ## lisenta - Automatic Music Transcription
 
-
+![Screenshot](Piano1.jpg)
 
 A prototype called lisenta that uses Tensorflow and Magenta to detect musical notes in a Piano .wav file. It transcribes it onto a midi file. Additionally, you can choose from a variety of different applications to generate new piano sequences.
 ##### 1. Hm, what are the notes in this piece?   
@@ -16,8 +16,6 @@ Mix and match the applications mentioned above to create your perfect song. You 
 ##### 6. Show it on Sheet Music
 Show whatever madness you just created on sheet paper to share it with others. The program MuseScore is used for this procedure. You can further tweak your creation on this program. 
 
-
-![Screenshot](Piano1.jpg)
 
 ### Setup
 Use `pip -m install tensorflow == 1.15.3` to install the specific version of TensorFlow that is compatible with Magenta.
