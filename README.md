@@ -1,10 +1,10 @@
-## Automatic Music Transcription
+## lisenta - Automatic Music Transcription
 
-![Screenshot](Piano1.jpg)
 
-A prototype that uses Tensorflow and Magenta to detect musical notes in a Piano .wav file. It transcribes it onto a midi file. Additionally, you can choose from a variety of different applications to generate new piano sequences.
-##### 1. What notes are these?  
-This program can transcribe your piano.wav files into .midi files. It uses Machine Learning for accurate note detection. Try it out! It's perfect to create sheet paper. Look at 6. for further information.
+
+A prototype called lisenta that uses Tensorflow and Magenta to detect musical notes in a Piano .wav file. It transcribes it onto a midi file. Additionally, you can choose from a variety of different applications to generate new piano sequences.
+##### 1. Hm, what are the notes in this piece?   
+This program detects notes and transcribes your piano.wav files into .midi files. It uses Machine Learning for accurate onset detection. Try it out! It's perfect to create sheet paper. Look at 6. for further information.
 ##### 2. Let this program be creative! 
 Need some variety in your songs? Try out the melody generator that creates a new monophonic melody based on one of your .midi songs. 
 ##### 3. Bach is still alive
@@ -15,6 +15,9 @@ Need some help in finding the right harmonizing chords? This application adds fi
 Mix and match the applications mentioned above to create your perfect song. You can also run these applications several times to see what this program creates. Just have fun! But careful, since this project is still in its development phase, errors can occure.
 ##### 6. Show it on Sheet Music
 Show whatever madness you just created on sheet paper to share it with others. The program MuseScore is used for this procedure. You can further tweak your creation on this program. 
+
+
+![Screenshot](Piano1.jpg)
 
 ### Setup
 Use `pip -m install tensorflow == 1.15.3` to install the specific version of TensorFlow that is compatible with Magenta.
